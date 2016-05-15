@@ -9,7 +9,6 @@ There are 2 modes:
 
 ## install
 
-unzip
 'npm install' to install dependencies
 
 ## usage
@@ -45,6 +44,8 @@ On each subsequent identical request the mock is returned during recording opera
 
 `node recorder.js <url> <mocks directory>`
 
+see recorder.sh for an example
+
 In the following sample the server activity is logged as we perform the same request 3 times.
 
 ``` bash
@@ -68,6 +69,8 @@ Listening on port: 3000
 ### Command line
 
 `node mocker.js`
+
+see mocker.sh for an example
 
 ```bash
 $ DEBUG=mockedapp:mocker,mockedapp:responses node mocker.js `pwd`/mocks
