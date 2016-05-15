@@ -1,4 +1,4 @@
-# mockedapp
+# Mockedapp
 
 This is a utility to support recording and mocking out HTTP interactions
 
@@ -15,8 +15,8 @@ There are 2 modes:
 
 The main idea behind Recorder is:
 
-1. Make your client's target host configurable.
-2. Set up a mocked server locally to proxy the target host.
+1. Make your client's target host configurable
+2. Set up a mocked server locally to proxy the target host (a url is the first required parameter) and specify the mock directory (the second required parameter)
 3. Point your client at the mockedapp server.
 
 Then develop or run your tests. If a recorded HTTP request is found on disk, it will be played back instead of hitting the target host. If no recorded request is found, the request will be forwarded to the target host and recorded to disk.
@@ -53,13 +53,19 @@ $ DEBUG=mockedapp:recorder,mockedapp:server,mockedapp:record node recorder.js ht
   mockedapp:recorder Forwarding to:http://localhost:80 +0ms
   mockedapp:recorder Recording mocks into:/tmp/mocks +3ms
 Listening on port: 3000
+
+
+//Here we submitted the request via 'curl  -X GET --data "foobar" http://localhost:3000/foo?foo=bar'
   mockedapp:server req +3s /foo?foo=bar
   mockedapp:server serving response from file +22ms /tmp/mocks/c249dedf870e294e2f0a5cba2ea494d1
-  mockedapp:record Recording result:c249dedf870e294e2f0a5cba2ea494d1.res +29ms
-  mockedapp:record Recording curl:c249dedf870e294e2f0a5cba2ea494d1.curl +2ms
-  mockedapp:record Recording matching function:c249dedf870e294e2f0a5cba2ea494d1.fn +0ms
+  mockedapp:record Recording result:c249dedf870e294e2f0a5cba2ea494d1.res +29ms //This will contain the response from http://localhost:80
+  mockedapp:record Recording curl:c249dedf870e294e2f0a5cba2ea494d1.curl +2ms //This is a curl command to push the response into Mocker
+  mockedapp:record Recording matching function:c249dedf870e294e2f0a5cba2ea494d1.fn +0ms //This is a javascript function which you may or may not want to change.
+
+//The recorder will return the recorded result if it sees the same request again.
   mockedapp:server req +4s /foo?foo=bar
   mockedapp:server serving response from file +1ms /tmp/mocks/c249dedf870e294e2f0a5cba2ea494d1
+
   mockedapp:server req +731ms /foo?foo=bar
   mockedapp:server serving response from file +1ms /tmp/mocks/c249dedf870e294e2f0a5cba2ea494d1
 ```
@@ -68,7 +74,7 @@ Listening on port: 3000
 
 ### Command line
 
-`node mocker.js`
+`node mocker.js <mocks directory>`
 
 see mocker.sh for an example
 
