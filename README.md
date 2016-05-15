@@ -89,10 +89,10 @@ $ DEBUG=mockedapp:mocker,mockedapp:responses node mocker.js `pwd`/mocks
 
       //Here we inject a couple different responses                
         mockedapp:responses Parse as function +2ms
-        mockedapp:responses Adding response +4s
-        mockedapp:responses Adding response +4s
+        mockedapp:responses Adding response +4s //This is a response for /foo
+        mockedapp:responses Adding response +4s //This is a response for /foo2
 
-      //Here we send in a request  
+      //Here we send in a request via 'curl  -X GET --data "foobar" http://localhost:3000/foo2?foo=bar'
         mockedapp:responses Parse as function +0ms
         mockedapp:responses find response for request +4s
         mockedapp:responses c249dedf870e294e2f0a5cba2ea494d1 +0ms
@@ -104,7 +104,7 @@ $ DEBUG=mockedapp:mocker,mockedapp:responses node mocker.js `pwd`/mocks
         mockedapp:responses c249dedf870e294e2f0a5cba2ea494d1 +0ms
         mockedapp:responses Handlerc249dedf870e294e2f0a5cba2ea494d1 +1ms
 
-     //The mocked response will be returned  
+     //The mocked response for /foo2 is returned to the curl
 ```
 
 ## Inspiration
@@ -112,7 +112,6 @@ $ DEBUG=mockedapp:mocker,mockedapp:responses node mocker.js `pwd`/mocks
 This utility is a fork of [yakbak][1]
 The [nock][3] functionality was also considered.
 
-## References
 
 [1]: https://www.npmjs.com/package/yakbak
 [2]: http://code.flickr.net/2016/04/25/introducing-yakbak-record-and-playback-http-interactions-in-nodejs/
