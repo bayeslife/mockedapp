@@ -1,0 +1,17 @@
+
+
+module.exports = function (req, res) {
+  res.statusCode = <%- JSON.stringify(res.statusCode) %>;
+
+<% Object.keys(res.headers).forEach(function (key) { -%>
+  res.setHeader(<%- JSON.stringify(key) %>, <%- JSON.stringify(res.headers[key]) %>);
+<% }); -%>
+
+
+<% body.forEach(function (data) { -%>
+  res.write(new Buffer(<%- JSON.stringify(data.toString('base64')) %>, "base64"));
+<% }); -%>
+  res.end();
+
+  return __filename;
+};

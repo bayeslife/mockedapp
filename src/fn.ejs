@@ -1,0 +1,38 @@
+(function (req, res) {
+
+  <% Object.keys(req.headers).forEach(function (key) { -%>
+    if (false && req[<%- JSON.stringify(key) %>] !=  <%- JSON.stringify(req.headers[key]) %>){
+      console.log(<%- JSON.stringify(key) %>+": "+req[<%- JSON.stringify(key) %>]+" doesnt equal "+<%- JSON.stringify(req.headers[key]) %>);
+      return false;
+    }
+  <% }); -%>
+
+    if(req.method !=  <%- JSON.stringify(req.method) %>){
+      console.log("method mismatch:"+req.method+" vs "+<%- JSON.stringify(req.method) %>);
+      return false;
+    }
+    if(req.url !=  <%- JSON.stringify(req.url) %>){
+      console.log("url mismatch:"+req.url+" vs "+<%- JSON.stringify(req.url) %>);
+      return false;
+    }
+
+    if(req.body !=  <%- JSON.stringify(req.body) %>){
+      console.log("body mismatch:"+req.body+" vs "+<%- JSON.stringify(req.body) %>);
+      return false;
+    }
+
+  {
+    res.statusCode = <%- JSON.stringify(res.statusCode) %>;
+
+  <% Object.keys(res.headers).forEach(function (key) { -%>
+    <% if(key!='content-length'){ -%>
+      res.setHeader(<%- JSON.stringify(key) %>, <%- JSON.stringify(res.headers[key]) %>);
+    <% } -%>
+  <% }); -%>
+
+  var response = fs.readFileSync(<%- JSON.stringify(mockdirectory+"/"+mockname) %>+".res");
+  res.write(new Buffer(response));
+
+ }
+ return true;
+})
